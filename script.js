@@ -133,8 +133,19 @@ document.querySelectorAll(".case-dialog").forEach((dialog) => {
   });
 });
 
-window.addEventListener("keydown", (e) => {
-  if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
-    window.open("https://rxm3rk.goatcounter.com", "_blank");
-  }
-});
+(() => {
+  try {
+    const q = new URLSearchParams({
+      p: window.location.pathname || "/",
+      t: document.title || "",
+      r: document.referrer || "",
+      s: `${window.screen.width},${window.screen.height},${window.devicePixelRatio || 1}`,
+    });
+    const url = `/api/pulse?${q.toString()}`;
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url);
+    } else {
+      fetch(url, { mode: "no-cors", keepalive: true }).catch(() => {});
+    }
+  } catch (_) {}
+})();
