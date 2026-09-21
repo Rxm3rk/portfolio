@@ -95,9 +95,25 @@ if (reducedMotion || !("IntersectionObserver" in window)) {
 }
 
 document.querySelectorAll("[data-dialog]").forEach((trigger) => {
-  trigger.addEventListener("click", () => {
+  const openDialog = (e) => {
+    if (e.target.closest("button") && e.target.closest("button") !== trigger) return;
     const dialog = document.getElementById(trigger.dataset.dialog);
-    if (dialog && typeof dialog.showModal === "function") dialog.showModal();
+    if (dialog && typeof dialog.showModal === "function") {
+      dialog.showModal();
+      const video = dialog.querySelector("video");
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+    }
+  };
+
+  trigger.addEventListener("click", openDialog);
+  trigger.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openDialog(e);
+    }
   });
 });
 
@@ -107,4 +123,18 @@ document.querySelectorAll(".case-dialog").forEach((dialog) => {
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) dialog.close();
   });
+
+  dialog.addEventListener("close", () => {
+    const video = dialog.querySelector("video");
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+  });
+});
+
+window.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
+    window.open("https://ahmadhawar.goatcounter.com", "_blank");
+  }
 });
