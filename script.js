@@ -135,6 +135,6 @@ document.querySelectorAll(".case-dialog").forEach((dialog) => {
 
 window.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
-    window.open("https://ahmadhawar.goatcounter.com", "_blank");
+    window.open("https://rxm3rk.goatcounter.com", "_blank");
   }
 });
