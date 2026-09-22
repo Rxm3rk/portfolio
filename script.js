@@ -43,7 +43,11 @@ if ("IntersectionObserver" in window) {
       if (!visible) return;
 
       navLinks.forEach((link) => {
-        link.classList.toggle("is-active", link.getAttribute("href") === "#" + visible.target.id);
+        const isActive = link.getAttribute("href") === "#" + visible.target.id;
+        link.classList.toggle("is-active", isActive);
+        if (isActive && window.innerWidth <= 860) {
+          link.scrollIntoView({ inline: "nearest", behavior: "smooth", block: "nearest" });
+        }
       });
     },
     { rootMargin: "-34% 0px -56% 0px", threshold: [0.01, 0.2, 0.45] },
