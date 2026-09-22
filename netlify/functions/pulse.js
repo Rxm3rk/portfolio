@@ -108,16 +108,8 @@ exports.handler = async function (event) {
     );
 
     // 2. Telegram visitor notification
-    const botToken =
-      process.env.TELEGRAM_BOT_TOKEN ||
-      Buffer.from(
-        "ODkwOTg1NTMyODpBQUZPMkRVZFRyT01Za0JnR2ZjZkRlUDBSN3dLRV9uWTI4dw==",
-        "base64",
-      ).toString("utf-8");
-
-    const chatId =
-      process.env.TELEGRAM_CHAT_ID ||
-      Buffer.from("OTQ5Nzg5MTUy", "base64").toString("utf-8");
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
 
     if (botToken && chatId) {
       tasks.push(
