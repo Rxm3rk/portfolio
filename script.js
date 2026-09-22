@@ -33,24 +33,31 @@ navLinks.forEach((link) => {
   });
 });
 
+let currentActiveSectionId = null;
+
 if ("IntersectionObserver" in window) {
+  const mainNav = document.querySelector(".main-nav");
+
   const navigationObserver = new IntersectionObserver(
     (entries) => {
       const visible = entries
         .filter((entry) => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-      if (!visible) return;
+      if (!visible || visible.target.id === currentActiveSectionId) return;
+      currentActiveSectionId = visible.target.id;
 
       navLinks.forEach((link) => {
-        const isActive = link.getAttribute("href") === "#" + visible.target.id;
+        const isActive = link.getAttribute("href") === "#" + currentActiveSectionId;
         link.classList.toggle("is-active", isActive);
-        if (isActive && window.innerWidth <= 860) {
-          link.scrollIntoView({ inline: "nearest", behavior: "smooth", block: "nearest" });
+        if (isActive && mainNav && window.innerWidth <= 860) {
+          const targetLeft =
+            link.offsetLeft - (mainNav.clientWidth / 2) + (link.clientWidth / 2);
+          mainNav.scrollTo({ left: targetLeft, behavior: "smooth" });
         }
       });
     },
-    { rootMargin: "-34% 0px -56% 0px", threshold: [0.01, 0.2, 0.45] },
+    { rootMargin: "-25% 0px -65% 0px", threshold: [0.05, 0.2] },
   );
 
   sections.forEach((section) => {

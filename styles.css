@@ -1724,8 +1724,6 @@ button {
     box-shadow: none;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-    scroll-padding: 0 18px;
     touch-action: pan-x;
   }
 
@@ -1735,7 +1733,6 @@ button {
 
   .nav-link {
     flex: 0 0 auto;
-    scroll-snap-align: center;
     white-space: nowrap;
     padding: 8px 14px;
     font-size: 0.74rem;
